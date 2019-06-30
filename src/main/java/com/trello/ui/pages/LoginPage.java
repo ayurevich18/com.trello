@@ -41,13 +41,7 @@ public class LoginPage {
 
     }
 
-    public void setCookies() {
-        Cookie ck = new Cookie("dsc", "b87dcbf9e520c6934d3a9cfb962b21d900f249c3252eb4264d2afa0ef30b3a19");
-        Cookie ck1 = new Cookie("token", "5c23b46c203b752e0cec7634%2FaVnJTvYO8x22R4z211eMnoMw220cyVf7dy8LCQJu0o4bQMLSJUdiW8fWOjxS7BRU");
-        driver().manage().addCookie(ck);
-        driver().manage().addCookie(ck1);
 
-    }
 
     public void loginAPI() throws IOException {
 
@@ -58,14 +52,10 @@ public class LoginPage {
                 .build();
         String cookie="";
         Response response3 = client.newCall(request3).execute();
-        for (okhttp3.Cookie s : SimpleOkHttpCookieJar.storage) {
-            cookie=s.name()+"="+s.value();
-
-            System.out.println("cookies: " + s);
-        }
 
 
-System.out.println(SimpleOkHttpCookieJar.storage.get(0));
+        cookie=SimpleOkHttpCookieJar.storage.get(0).name()+"="+SimpleOkHttpCookieJar.storage.get(0).value();
+
 
 
         MediaType textPlainMT = MediaType.parse("application/x-www-form-urlencoded");
@@ -77,8 +67,7 @@ System.out.println(SimpleOkHttpCookieJar.storage.get(0));
 
         String s = response.body().string();
         String code = s.substring(s.indexOf(":") + 2, s.lastIndexOf("\""));
-        System.out.println(s);
-        System.out.println("CODE : " + code);
+
 
 
         MediaType textPlainMT1 = MediaType.parse("application/x-www-form-urlencoded");
@@ -88,7 +77,15 @@ System.out.println(SimpleOkHttpCookieJar.storage.get(0));
                 .post(RequestBody.create(textPlainMT1, helloMsg1)).build();
         Response response1 = client.newCall(request1).execute();
         System.out.println(response1.body().string());
+        for (okhttp3.Cookie p : SimpleOkHttpCookieJar.storage) {
 
+
+            System.out.println("cookies: " + p);
+        }
+        Cookie ck = new Cookie("dsc", SimpleOkHttpCookieJar.storage.get(0).value());
+        Cookie ck1 = new Cookie("token", SimpleOkHttpCookieJar.storage.get(3).value());
+        driver().manage().addCookie(ck);
+        driver().manage().addCookie(ck1);
 
     }
 

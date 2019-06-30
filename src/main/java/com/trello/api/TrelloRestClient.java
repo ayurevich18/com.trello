@@ -8,9 +8,10 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-public class TrelloRestClient {
+public class TrelloRestClient implements Serializable {
     public static final String HOME_IO_BASE_URL = "https://api.trello.com/1/";
 
 

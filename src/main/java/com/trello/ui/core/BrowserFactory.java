@@ -10,6 +10,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 
@@ -28,7 +29,7 @@ public class BrowserFactory {
     }
 
 
-    @AfterTest
+    @AfterSuite
     public void tearDown() {
         driver.quit();
         logger.info("CLOSE BROWSER");
