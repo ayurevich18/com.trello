@@ -2,28 +2,32 @@ package regression;
 
 import com.trello.api.TrelloRestClient;
 import com.trello.api.models.Card;
+import com.trello.api.models.Checklists;
+import com.trello.api.models.Members;
 import com.trello.ui.core.BrowserFactory;
 import com.trello.ui.pages.BoardsPage;
 import com.trello.ui.pages.CardPage;
 import com.trello.ui.pages.LoginPage;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-public class CardActions extends BrowserFactory  {
+import java.util.Date;
+
+
+public class CardActions extends BrowserFactory {
     public TrelloRestClient client = new TrelloRestClient();
 
     public LoginPage loginPage = new LoginPage();
     public BoardsPage boardsPage = new BoardsPage();
     public CardPage cardPage = new CardPage();
 
-    Card card = new Card("Test_Card_"+new Date().getTime());
+    Card card = new Card("Test_Card_" + new Date().getTime());
 
 
     @BeforeTest
@@ -33,92 +37,113 @@ public class CardActions extends BrowserFactory  {
     }
 
 
-
     @Test
-    public void loginTest()throws IOException{
+    public void loginTest() throws IOException {
         driver().get("https://trello.com");
         loginPage.loginAPI();
 
 
     }
 
+
     @Test(dependsOnMethods = "loginTest")
-    public void openCard()throws InterruptedException{
+    public void openCard() {
         driver().get(card.url);
-        Thread.sleep(10000);
+        Assert.assertTrue(!driver.findElements(By.cssSelector(".window")).isEmpty(), "Card page not opened");
     }
 
     @Test
-    public void moveCard(){
+    public void moveCard() {
         //   cardPage.moveToList(""):
 
     }
 
-    @Test(dependsOnMethods ="loginTest")
-    public void renameCardTest() throws IOException{
+    @Test(dependsOnMethods = "loginTest")
+    public void renameCardTest() throws IOException {
         driver().get(card.url);
         cardPage.ranameCard("Test");
-        String cardName=getCardItems(card.id).name;
-        Assert.assertEquals("Test",cardName);
+        String cardName = getCardItems(card.id).name;
+        Assert.assertEquals("Test", getCardItems(card.id).name);
 
     }
 
 
-
-    @Test(dependsOnMethods ="loginTest")
-    public void writeDescriptionTest()throws IOException{
+    @Test(dependsOnMethods = "loginTest")
+    public void writeDescriptionTest() throws IOException {
         driver().get(card.url);
-        String setDesc="test hhhhhhh";
+        String setDesc = "test hhhhhhh";
         cardPage.writeDescription(setDesc);
-        String cardDesc=getCardItems(card.id).desc;
-        Assert.assertEquals(setDesc,cardDesc);
+        Assert.assertEquals(setDesc, getCardItems(card.id).desc);
     }
 
-    @Test(dependsOnMethods ="loginTest")
-    public void editDescriptionTest()throws IOException{
+    @Test(dependsOnMethods = "writeDescriptionTest")
+    public void editDescriptionTest() throws IOException {
         driver().get(card.url);
-        String setDesc="test hhhhhhh";
-        cardPage.writeDescription(setDesc);
-        String setDesc1="Hello word";
+        String setDesc1 = "Hello word";
         cardPage.editDescription(setDesc1);
-        String cardDesc=getCardItems(card.id).desc;
-        Assert.assertEquals(setDesc1,cardDesc);
+
+        Assert.assertEquals(setDesc1, getCardItems(card.id).desc);
 
     }
 
-    @Test(dependsOnMethods ="loginTest")
-    public void addComentTest()throws IOException{
+    @Test(dependsOnMethods = "loginTest")
+    public void addComentTest() throws IOException {
         driver().get(card.url);
-        String addCom="Test";
+        String addCom = "Test";
         cardPage.addComment(addCom);
-        String qtyComments=client.cardsService.getCard(card.id).execute().body().badges.comments;
-        Assert.assertEquals("1",qtyComments);
+        String qtyComments = client.cardsService.getCard(card.id).execute().body().badges.comments;
+        Assert.assertEquals("1", qtyComments);
 
     }
 
 
-    @Test(dependsOnMethods ="loginTest")
-    public void addLabelTest()throws IOException{
+    @Test(dependsOnMethods = "loginTest")
+    public void addLabelTest() throws IOException {
         driver().get(card.url);
-        String setColor="green";
+        String setColor = "green";
         cardPage.addLabel(setColor);
-        String apiGetColor=getCardItems(card.id).labels.get(0).color;
-        Assert.assertEquals(setColor,apiGetColor);
+        Assert.assertEquals(setColor, getCardItems(card.id).labels.get(0).color);
     }
 
+    @Test(dependsOnMethods = "loginTest")
+    public void addMemberTest() throws IOException {
+        driver().get(card.url);
+        cardPage.addMember("Aleksey");
+        Assert.assertEquals("Aleksey", getMembersItems(getIdMember()).fullName);
+    }
+
+    @Test(dependsOnMethods = "loginTest")
+    public void addChecklistTest() throws IOException {
+        driver().get(card.url);
+        cardPage.addChecklist("test");
+        Assert.assertEquals("test", getChecklistItems(getChecklistId()).name);
 
 
-
-
-
+    }
 
 
     @AfterTest
     public void clearData() throws IOException {
-       client.cardsService.deleteCard(card.id).execute();
+        client.cardsService.deleteCard(card.id).execute();
     }
 
-    private Card getCardItems(String cardId) throws IOException{
+    private Card getCardItems(String cardId) throws IOException {
         return client.cardsService.getCard(cardId).execute().body();
+    }
+
+    private Members getMembersItems(String memberId) throws IOException {
+        return client.membersServise.getMembers(memberId).execute().body();
+    }
+
+    private Checklists getChecklistItems(String checklistId) throws IOException {
+        return client.checklistsService.getChecklist(checklistId).execute().body();
+    }
+
+    private String getChecklistId() throws IOException {
+        return getCardItems(card.id).getIdChecklist().get(0);
+    }
+
+    private String getIdMember() throws IOException {
+        return getCardItems(card.id).getIdMembers().get(0);
     }
 }

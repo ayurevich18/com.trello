@@ -35,7 +35,10 @@ public class TryLogger extends BrowserFactory {
 
         Card card= new Card();
        card= client.cardsService.getCard("5d1670c8c47def2a20f8678c").execute().body();
-       System.out.println(card.labels.get(0).color);
+       System.out.println(card.getIdMembers().get(0));
+       System.out.println(client.membersServise.getMembers("5c23b46c203b752e0cec7634").execute().body().fullName);
+       System.out.println(card.getIdChecklist().get(0));
+
 
     }
 }

@@ -16,11 +16,7 @@ public class LoginTest extends BrowserFactory {
 
         driver().get("https://trello.com/b/rwRWidif/999");
 
-        Thread.sleep(5000);
 
-        driver().navigate().refresh();
-        Thread.sleep(10000);
-//
 
 
 

@@ -1,9 +1,9 @@
 package com.trello.api;
 
 import com.trello.api.interceptors.TrelloAuthInterceptor;
-import com.trello.api.services.BoardsService;
-import com.trello.api.services.CardsService;
-import com.trello.api.services.ListsService;
+import com.trello.api.models.Checklists;
+import com.trello.api.models.Members;
+import com.trello.api.services.*;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,6 +18,8 @@ public class TrelloRestClient implements Serializable {
     public BoardsService boardsService;
     public ListsService listsService;
     public CardsService cardsService;
+    public MembersServise membersServise;
+    public ChecklistsService checklistsService;
 
 
     public TrelloRestClient() {
@@ -37,6 +39,8 @@ public class TrelloRestClient implements Serializable {
         boardsService = retrofit.create(BoardsService.class);
         listsService = retrofit.create(ListsService.class);
         cardsService = retrofit.create(CardsService.class);
+        membersServise = retrofit.create(MembersServise.class);
+        checklistsService = retrofit.create(ChecklistsService.class);
     }
 
 }

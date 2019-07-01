@@ -10,16 +10,23 @@ import static com.trello.ui.core.BrowserFactory.driver;
 
 public class CardPage {
 
-    public Elem nameFld = new Elem(By.cssSelector("textarea.js-card-detail-title-input"), "Card name field");
-    public Elem openDescr = new Elem(By.cssSelector(".js-hide-with-draft"), "Open Description Body");
-    public Elem descriptionBody = new Elem(By.cssSelector(".card-description"), "Description Body");
-    public Elem saveButton = new Elem(By.cssSelector(".mod-submit-edit"), "Save Button");
-    public Elem editBtn = new Elem(By.cssSelector(".button.js-edit-desc"), "Edit Button");
-    public Elem commentInput = new Elem(By.cssSelector("textarea.js-new-comment-input"), "Comment Input");
-    public Elem commentSaveBtn = new Elem(By.cssSelector(".mod-no-top-bottom-margin"), "Save comment button");
-    public Elem labelBtn= new Elem(By.cssSelector(".js-edit-labels"), "Add label button");
-    public Elem searchInput= new Elem(By.cssSelector(".js-label-search"), "Search input label menu");
-    public Elem selectLabel= new Elem(By.cssSelector(".js-select-label"), "Select label");
+    private Elem nameFld = new Elem(By.cssSelector("textarea.js-card-detail-title-input"), "Card name field");
+    private Elem openDescr = new Elem(By.cssSelector(".js-hide-with-draft"), "Open Description Body");
+    private Elem descriptionBody = new Elem(By.cssSelector(".card-description"), "Description Body");
+    private Elem saveButton = new Elem(By.cssSelector(".mod-submit-edit"), "Save Button");
+    private Elem editBtn = new Elem(By.cssSelector(".button.js-edit-desc"), "Edit Button");
+    private Elem commentInput = new Elem(By.cssSelector("textarea.js-new-comment-input"), "Comment Input");
+    private Elem commentSaveBtn = new Elem(By.cssSelector(".mod-no-top-bottom-margin"), "Save comment button");
+    private Elem labelBtn= new Elem(By.cssSelector(".js-edit-labels"), "Add label button");
+    private Elem searchInput= new Elem(By.cssSelector(".js-label-search"), "Search input label menu");
+    private Elem selectLabel= new Elem(By.cssSelector(".js-select-label"), "Select label");
+    private Elem membersBtn= new Elem(By.cssSelector(".js-change-card-members"), "Members");
+    private Elem searchMembers= new Elem(By.cssSelector(".js-search-mem"), "Search Members");
+    private Elem selectMember= new Elem(By.cssSelector(".js-select-member"), "Select member");
+    private Elem checklistAdd= new Elem(By.cssSelector(".js-add-checklist-menu"), "Add checklist");
+    private Elem titleCheckList= new Elem(By.cssSelector("#id-checklist"), "Title cheklist");
+    private Elem checkAddBtn= new Elem(By.cssSelector(".js-add-checklist"), "Add checklist Button");
+
 
 
 
@@ -69,6 +76,27 @@ public class CardPage {
 
 
     }
+
+    public void addMember(String name){
+        membersBtn.click();
+        searchMembers.type(name);
+        selectMember.click();
+        new WebDriverWait(driver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".card-detail-item-header.mod-no-top-margin")));
+
+    }
+
+    public void addChecklist(String name){
+        checklistAdd.click();
+        titleCheckList.type(name);
+        checkAddBtn.click();
+        new WebDriverWait(driver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("h3.current.hide-on-edit")));
+
+    }
+
+
+
+
+
 
 
 
