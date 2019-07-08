@@ -3,6 +3,7 @@ package com.trello.ui.pages;
 import com.trello.api.SimpleOkHttpCookieJar;
 import com.trello.ui.core.Constants;
 import com.trello.ui.core.Elem;
+import io.qameta.allure.Step;
 import okhttp3.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -42,7 +43,7 @@ public class LoginPage {
     }
 
 
-
+    @Step
     public void loginAPI() throws IOException {
 
         OkHttpClient client = new OkHttpClient().newBuilder().cookieJar(new SimpleOkHttpCookieJar()).build();

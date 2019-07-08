@@ -8,6 +8,7 @@ import com.trello.ui.core.BrowserFactory;
 import com.trello.ui.pages.BoardsPage;
 import com.trello.ui.pages.CardPage;
 import com.trello.ui.pages.LoginPage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -18,6 +19,9 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 
 import java.util.Date;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 
 
 public class CardActions extends BrowserFactory {
@@ -38,6 +42,7 @@ public class CardActions extends BrowserFactory {
 
 
     @Test
+    @Step
     public void loginTest() throws IOException {
         driver().get("https://trello.com");
         loginPage.loginAPI();
@@ -47,6 +52,7 @@ public class CardActions extends BrowserFactory {
 
 
     @Test(dependsOnMethods = "loginTest")
+    @Step
     public void openCard() {
         driver().get(card.url);
         Assert.assertTrue(!driver.findElements(By.cssSelector(".window")).isEmpty(), "Card page not opened");
@@ -59,6 +65,7 @@ public class CardActions extends BrowserFactory {
     }
 
     @Test(dependsOnMethods = "loginTest")
+    @Step
     public void renameCardTest() throws IOException {
         driver().get(card.url);
         cardPage.ranameCard("Test");
@@ -69,24 +76,28 @@ public class CardActions extends BrowserFactory {
 
 
     @Test(dependsOnMethods = "loginTest")
-    public void writeDescriptionTest() throws IOException {
+    @Step
+    public void writeDescriptionTest() throws IOException,InterruptedException {
         driver().get(card.url);
         String setDesc = "test hhhhhhh";
         cardPage.writeDescription(setDesc);
+        await().atMost(5, SECONDS).until(() -> (getCardItems(card.id).desc).equals(setDesc));
         Assert.assertEquals(setDesc, getCardItems(card.id).desc);
     }
 
     @Test(dependsOnMethods = "writeDescriptionTest")
-    public void editDescriptionTest() throws IOException {
+    @Step
+    public void editDescriptionTest() throws IOException,InterruptedException {
         driver().get(card.url);
         String setDesc1 = "Hello word";
         cardPage.editDescription(setDesc1);
-
+        await().atMost(5, SECONDS).until(() -> (getCardItems(card.id).desc).equals(setDesc1));
         Assert.assertEquals(setDesc1, getCardItems(card.id).desc);
 
     }
 
     @Test(dependsOnMethods = "loginTest")
+    @Step
     public void addComentTest() throws IOException {
         driver().get(card.url);
         String addCom = "Test";
@@ -98,14 +109,17 @@ public class CardActions extends BrowserFactory {
 
 
     @Test(dependsOnMethods = "loginTest")
-    public void addLabelTest() throws IOException {
+    @Step
+    public void addLabelTest() throws IOException,InterruptedException {
         driver().get(card.url);
         String setColor = "green";
         cardPage.addLabel(setColor);
+        await().atMost(5, SECONDS).until(() -> getCardItems(card.id).labels.size() == 1);
         Assert.assertEquals(setColor, getCardItems(card.id).labels.get(0).color);
     }
 
     @Test(dependsOnMethods = "loginTest")
+    @Step
     public void addMemberTest() throws IOException {
         driver().get(card.url);
         cardPage.addMember("Aleksey");
@@ -113,10 +127,11 @@ public class CardActions extends BrowserFactory {
     }
 
     @Test(dependsOnMethods = "loginTest")
+    @Step
     public void addChecklistTest() throws IOException {
         driver().get(card.url);
         cardPage.addChecklist("test");
-        Assert.assertEquals("test", getChecklistItems(getChecklistId()).name);
+         Assert.assertEquals("test", getChecklistItems(getChecklistId()).name);
 
 
     }
@@ -140,6 +155,7 @@ public class CardActions extends BrowserFactory {
     }
 
     private String getChecklistId() throws IOException {
+        await().atMost(5, SECONDS).until(() -> getCardItems(card.id).getIdChecklist().size() == 1);
         return getCardItems(card.id).getIdChecklist().get(0);
     }
 
