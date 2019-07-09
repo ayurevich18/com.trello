@@ -59,6 +59,7 @@ public class CardActions extends BrowserFactory {
     }
 
     @Test
+    @Ignore
     public void moveCard() {
         //   cardPage.moveToList(""):
 
