@@ -1,6 +1,7 @@
 package com.trello.ui.pages;
 
 import com.trello.ui.core.Elem;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,7 +34,7 @@ public class CardPage {
 
 
 
-
+    @Step
     public void ranameCard(String name){
         nameFld.click();
         nameFld.type(name);
@@ -41,7 +42,7 @@ public class CardPage {
         new WebDriverWait(driver(), 10).until(ExpectedConditions.titleIs(name+" on 999 | Trello"));
 
     }
-
+    @Step
     public void writeDescription(String description){
         openDescr.click();
         descriptionBody.type(description);
@@ -49,7 +50,7 @@ public class CardPage {
         new WebDriverWait(driver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".button.js-edit-desc")));
 
     }
-
+    @Step
     public void editDescription(String description){
         editBtn.click();
         descriptionBody.type(description);
@@ -58,7 +59,7 @@ public class CardPage {
 
 
     }
-
+    @Step
     public void addComment(String comment){
         commentInput.click();
         commentInput.type(comment);
@@ -67,7 +68,7 @@ public class CardPage {
 
 
     }
-
+    @Step
     public void addLabel(String color){
         labelBtn.click();
         searchInput.type(color);
@@ -76,7 +77,7 @@ public class CardPage {
 
 
     }
-
+    @Step
     public void addMember(String name){
         membersBtn.click();
         searchMembers.type(name);
@@ -84,7 +85,7 @@ public class CardPage {
         new WebDriverWait(driver(), 10).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".card-detail-item-header.mod-no-top-margin")));
 
     }
-
+     @Step
     public void addChecklist(String name){
         checklistAdd.click();
         titleCheckList.type(name);
