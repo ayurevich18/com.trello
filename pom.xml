@@ -32,10 +32,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-<<<<<<< HEAD
 
-=======
->>>>>>> fe6cd23b3bfa306401884412aa156fe535e23be8
                 <version>2.20</version>
                 <configuration>
                     <argLine>
@@ -47,10 +44,9 @@
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
-<<<<<<< HEAD
+
                     <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
-=======
->>>>>>> fe6cd23b3bfa306401884412aa156fe535e23be8
+
                 </configuration>
 
                 <dependencies>
@@ -125,14 +121,13 @@
             <artifactId>allure-testng</artifactId>
             <version>2.12.1</version>
         </dependency>
-<<<<<<< HEAD
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-email</artifactId>
             <version>1.5</version>
         </dependency>
-=======
->>>>>>> fe6cd23b3bfa306401884412aa156fe535e23be8
+
 
 
 
