@@ -160,6 +160,7 @@ public class CardActions extends BrowserFactory {
     }
 
     private String getIdMember() throws IOException {
+        await().atMost(5, SECONDS).until(() -> getCardItems(card.id).getIdMembers().size() == 1);
         return getCardItems(card.id).getIdMembers().get(0);
     }
 }
