@@ -9,6 +9,8 @@ import static com.trello.ui.core.BrowserFactory.driver;
 
 public class BoardPage {
 
+    public static final String PATH="aleksey899/boards";
+
     public Elem addList=new Elem(By.cssSelector("form>a"),"Add a list");
     public Elem listTitle=new Elem(By.cssSelector("input.list-name-input"),"Enter list title");
     public Elem addListButton=new Elem(By.cssSelector("input[value='Add List']"),"Add List Button");

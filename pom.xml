@@ -12,12 +12,41 @@
         <allure.results.directory>${buildDirectory}/allure-results</allure.results.directory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.12.1</allure.version>
-        <aspectj.version>1.8.10</aspectj.version>
+        <aspectj.version>1.9.2</aspectj.version>
         <suite>xmls/TestNG.xml</suite>
     </properties>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.zetten</groupId>
+                    <artifactId>xvfb-maven-plugin</artifactId>
+                    <version>${xvfb-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>wrap-tests</id>
+                            <goals>
+                                <goal>run</goal>
+                                <goal>stop</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-surefire-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                    <configuration>
+                        <useUIHarness>true</useUIHarness>
+
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -38,7 +38,6 @@ public class LoginPage {
         loginFld.type(email);
         passwordFld.type(password);
         loginButton.click();
-        System.out.println(driver().manage().getCookies());
 
     }
 
