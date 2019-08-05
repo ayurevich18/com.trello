@@ -39,7 +39,9 @@
                     <version>${tycho.version}</version>
                     <configuration>
                         <useUIHarness>true</useUIHarness>
-
+                        <environmentVariables>
+                            <DISPLAY>1</DISPLAY>
+                        </environmentVariables>
                     </configuration>
                 </plugin>
             </plugins>
