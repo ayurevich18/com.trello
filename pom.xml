@@ -17,35 +17,7 @@
     </properties>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.github.zetten</groupId>
-                    <artifactId>xvfb-maven-plugin</artifactId>
-                    <version>${xvfb-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>wrap-tests</id>
-                            <goals>
-                                <goal>run</goal>
-                                <goal>stop</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.tycho</groupId>
-                    <artifactId>tycho-surefire-plugin</artifactId>
-                    <version>${tycho.version}</version>
-                    <configuration>
-                        <useUIHarness>true</useUIHarness>
-                        <environmentVariables>
-                            <DISPLAY>1</DISPLAY>
-                        </environmentVariables>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        g
 
         <plugins>
 
