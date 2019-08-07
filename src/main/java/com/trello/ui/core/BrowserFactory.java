@@ -22,7 +22,7 @@ public class BrowserFactory {
 
     @BeforeSuite
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "/var/jenkins_home/test/chromedriver");
+//        System.setProperty("webdriver.chrome.driver", "/var/jenkins_home/test/chromedriver");
         driver = new ChromeDriver();
         driver = new EventFiringWebDriver(driver).register(new BrowserListener());
         logger.info("OPEN BROWSER");
